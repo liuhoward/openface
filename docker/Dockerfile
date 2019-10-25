@@ -41,7 +41,7 @@ RUN apt-get update \
  && add-apt-repository -y ppa:deadsnakes/ppa \
  && add-apt-repository -y ppa:ubuntu-toolchain-r/test \
  && apt-get update \
- && apt-get install -y python3.6 python3.6-dev \
+ && apt-get install -y python3.6 python3.6-dev python3-apt \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
