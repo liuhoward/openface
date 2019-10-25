@@ -41,12 +41,13 @@ RUN apt-get update \
  && add-apt-repository -y ppa:deadsnakes/ppa \
  && add-apt-repository -y ppa:ubuntu-toolchain-r/test \
  && apt-get update \
- && apt-get install -y python3.6 python3.6-dev python3-apt \
+ && apt-get install -y python3.6 python3.6-dev \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
 RUN touch /usr/bin/python3 && rm /usr/bin/python3
 RUN ln -s /usr/bin/python3.6 /usr/bin/python3
+RUN ln -s /usr/bin/python3.6 /usr/local/bin/python 
 
 # cmake
 RUN apt-get update \
