@@ -32,6 +32,18 @@ RUN apt-get update -qq &&\
         libpng-dev libtiff-dev &&\
     rm -rf /var/lib/apt/lists/*
 
+# cmake
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
+        apt-transport-https ca-certificates gnupg software-properties-common wget \
+ && wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | apt-key add - \
+ && apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main' \
+ && apt-get update \
+ && apt-get install -y cmake \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
+# python3.6 & gcc
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
         build-essential \
@@ -48,18 +60,6 @@ RUN apt-get update \
 RUN touch /usr/bin/python3 && rm /usr/bin/python3
 RUN ln -s /usr/bin/python3.6 /usr/bin/python3
 RUN ln -s /usr/bin/python3.6 /usr/local/bin/python 
-
-# cmake
-RUN apt-get update \
- && apt-get install -y --no-install-recommends \
-        apt-transport-https ca-certificates gnupg software-properties-common wget \
- && wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | apt-key add - \
- && apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main' \
- && apt-get update \
- && apt-get install -y cmake \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
-
 
 
 ## ==================== Build-time dependency libs ======================
