@@ -16,7 +16,7 @@ RUN wget -q https://www.dropbox.com/s/7na5qsjzz8yfoer/cen_patches_0.25_of.dat &&
 ## This will be our base image for OpenFace, and also the base for the compiler
 ## image. We only need packages which are linked
 
-FROM ubuntu:18.04 as ubuntu_base
+FROM ubuntu:16.04 as ubuntu_base
 
 LABEL maintainer="Michael McDermott <mikemcdermott23@gmail.com>"
 
@@ -31,6 +31,23 @@ RUN apt-get update -qq &&\
         libtbb2 libtbb-dev libjpeg-dev \
         libpng-dev libtiff-dev &&\
     rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
+        build-essential \
+        curl \
+        software-properties-common \
+        python3-pip \
+ && add-apt-repository -y ppa:deadsnakes/ppa \
+ && add-apt-repository ppa:ubuntu-toolchain-r/test \
+ && apt-get update \
+ && apt-get install -y python3.6 python3.6-dev \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN touch /usr/bin/python3 && rm /usr/bin/python3
+RUN ln -s /usr/bin/python3.6 /usr/bin/python3
+
 
 ## ==================== Build-time dependency libs ======================
 ## This will build and install opencv and dlib into an additional dummy
