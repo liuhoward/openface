@@ -53,7 +53,7 @@ RUN apt-get update \
  && add-apt-repository -y ppa:deadsnakes/ppa \
  && add-apt-repository -y ppa:ubuntu-toolchain-r/test \
  && apt-get update \
- && apt-get install -y gcc-4.9 libstdc++6 \
+ && apt-get install -y libstdc++6 \
  && apt-get install -y python3.6 python3.6-dev \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
