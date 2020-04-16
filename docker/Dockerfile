@@ -53,7 +53,6 @@ RUN apt-get update \
  && add-apt-repository -y ppa:deadsnakes/ppa \
  && add-apt-repository -y ppa:ubuntu-toolchain-r/test \
  && apt-get update \
- && apt-get install -y libstdc++6 \
  && apt-get install -y python3.6 python3.6-dev \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
@@ -74,9 +73,9 @@ WORKDIR /root/build-dep
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update -qq && apt-get install -qq -y \
-        cmake ninja-build pkg-config build-essential checkinstall\
-        g++-8 &&\
-    rm -rf /var/lib/apt/lists/* &&\
+        cmake ninja-build pkg-config build-essential checkinstall \
+        g++-8 libstdc++6 && \
+    rm -rf /var/lib/apt/lists/* && \
     update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8
 
 ##        llvm clang-3.7 libc++-dev libc++abi-dev  \
