@@ -16,7 +16,7 @@ RUN wget -q https://www.dropbox.com/s/7na5qsjzz8yfoer/cen_patches_0.25_of.dat &&
 ## This will be our base image for OpenFace, and also the base for the compiler
 ## image. We only need packages which are linked
 
-FROM ubuntu:16.04 as ubuntu_base
+FROM ubuntu:18.04 as ubuntu_base
 
 LABEL maintainer="Michael McDermott <mikemcdermott23@gmail.com>"
 
@@ -37,13 +37,13 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends \
         apt-transport-https ca-certificates gnupg software-properties-common wget \
  && wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | apt-key add - \
- && apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main' \
+ && apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ bionic main' \
  && apt-get update \
  && apt-get install -y cmake \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-# python3.6 & gcc
+# python3.8 & gcc
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
         build-essential \
@@ -53,13 +53,13 @@ RUN apt-get update \
  && add-apt-repository -y ppa:deadsnakes/ppa \
  && add-apt-repository -y ppa:ubuntu-toolchain-r/test \
  && apt-get update \
- && apt-get install -y python3.6 python3.6-dev \
+ && apt-get install -y python3.8 python3.8-dev \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
 RUN touch /usr/bin/python3 && rm /usr/bin/python3
-RUN ln -s /usr/bin/python3.6 /usr/bin/python3
-RUN ln -s /usr/bin/python3.6 /usr/local/bin/python 
+RUN ln -s /usr/bin/python3.8 /usr/bin/python3
+RUN ln -s /usr/bin/python3.8 /usr/local/bin/python 
 
 
 ## ==================== Build-time dependency libs ======================
